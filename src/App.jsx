@@ -1,4 +1,4 @@
-﻿import {
+import {
     useEffect,
     useReducer,
     useRef,
@@ -155,95 +155,8 @@ const levels = [
         ],
     },
 
-    {
-        title: "Dark Web Investigation",
-        theme: "darkweb",
-        story: "Investigators infiltrated a hidden marketplace distributing malware tools.",
-        mission: "Track dark web criminal evidence.",
-        walls: [{ x: 4, y: 4 }, { x: 5, y: 4 }, { x: 6, y: 4 }, { x: 12, y: 7 }, { x: 13, y: 7 }],
-        hazards: [{ x: 8, y: 10 }, { x: 9, y: 10 }],
-        evidence: [
-            {
-                id: 1,
-                x: 3,
-                y: 9,
-                question: "Which evidence links suspects to dark web activity?",
-                options: ["Encrypted Marketplace Chat Logs", "Wallpaper", "Movie Poster", "Coffee Receipt"],
-                answer: 0,
-            },
-            {
-                id: 2,
-                x: 16,
-                y: 3,
-                question: "What is commonly sold on dark web markets?",
-                options: ["Stolen Credentials", "Restaurant Coupons", "Movie Tickets", "Wallpaper Packs"],
-                answer: 0,
-            },
-        ],
-        enemies: [
-            { id: 1, type: "hunter", x: 14, y: 4 },
-            { id: 2, type: "hunter", x: 10, y: 8 },
-        ],
-    }, {
-        title: "AI Deepfake Crime",
-        theme: "ai",
-        story: "Criminals used AI-generated deepfake videos and cloned voices.",
-        mission: "Identify deepfake-related evidence.",
-        walls: [{ x: 5, y: 5 }, { x: 6, y: 5 }, { x: 7, y: 5 }, { x: 12, y: 2 }, { x: 12, y: 3 }],
-        hazards: [{ x: 15, y: 9 }],
-        evidence: [
-            {
-                id: 1,
-                x: 2,
-                y: 3,
-                question: "Which evidence indicates deepfake technology?",
-                options: ["AI Generated Voice Clone", "Travel Ticket", "Email", "Menu"],
-                answer: 0,
-            },
-            {
-                id: 2,
-                x: 16,
-                y: 7,
-                question: "What technology generates fake human faces?",
-                options: ["GAN AI Models", "Calculator App", "Printer Driver", "Music Player"],
-                answer: 0,
-            },
-        ],
-        enemies: [{ id: 1, type: "tank", x: 14, y: 6 }],
-    },
+    ];
 
-    {
-        title: "International Cybercrime Network",
-        theme: "boss",
-        story: "An international cybercrime syndicate launched coordinated global attacks.",
-        mission: "Destroy the cybercrime network.",
-        walls: [{ x: 5, y: 1 }, { x: 5, y: 2 }, { x: 5, y: 3 }, { x: 10, y: 5 }, { x: 11, y: 5 }, { x: 12, y: 5 }],
-        hazards: [{ x: 7, y: 10 }, { x: 8, y: 10 }, { x: 13, y: 2 }, { x: 13, y: 3 }],
-        evidence: [
-            {
-                id: 1,
-                x: 18,
-                y: 10,
-                question: "Which evidence confirms money laundering activity?",
-                options: ["Cryptocurrency Transaction Chain", "Hotel Reservation", "Movie Ticket", "Food Delivery"],
-                answer: 0,
-            },
-            {
-                id: 2,
-                x: 2,
-                y: 10,
-                question: "What technology hides criminal transactions?",
-                options: ["Cryptocurrency Mixers", "Wallpaper Apps", "Travel Maps", "Photo Filters"],
-                answer: 0,
-            },
-        ],
-        enemies: [
-            { id: 1, type: "tank", x: 15, y: 3 },
-            { id: 2, type: "hunter", x: 10, y: 9 },
-        ],
-    },
-
-];
 const createInitialState = () => ({
     level: 0,
     hp: 10,
@@ -252,7 +165,7 @@ const createInitialState = () => ({
     bullets: [],
     evidence: levels[0].evidence,
     enemies: levels[0].enemies,
-    message: "Investigate the cybercrime case.",
+    message: "Find the cyber crime proof.",
     gameOver: false,
     gameWin: false,
 });
@@ -381,8 +294,7 @@ function App() {
 
     const [state, dispatch] = useReducer(reducer, createInitialState());
     const [question, setQuestion] = useState(null);
-    const [showTutorial, setShowTutorial] =
-        useState(true);
+    const [showTutorial, setShowTutorial] = useState(true);
     const collisionCooldown = useRef(false);
     const level = levels[state.level];
 
@@ -431,7 +343,7 @@ function App() {
         <div className={`gameContainer ${level.theme}`}>
             <h1>Cyber Forensics Escape</h1>
             <div className="stats">
-                <p>HP: {state.hp}/10</p>
+                <p>❤️ {state.hp}/10</p>
                 <p>Score: {state.score}</p>
                 <p>Level: {state.level + 1}</p>
             </div>
@@ -469,7 +381,18 @@ function App() {
                 <div className="player" style={{ left: state.player.x * TILE, top: state.player.y * TILE }}>🕵️</div>
             </div>
 
-            {question && (
+            
+            {showTutorial && (
+                <div className="popup">
+                    <div className="popupBox tutorialBox">
+                        <h2>Game Rules</h2>
+                        <p>Use W A S D to move.<br/>Find all proof.<br/>Answer questions correctly.<br/>Wrong answer or enemy hit = HP -1.</p>
+                        <button onClick={() => setShowTutorial(false)}>Start Game</button>
+                    </div>
+                </div>
+            )}
+
+{question && (
                 <div className="popup">
                     <div className="popupBox">
                         <h2>Digital Evidence Analysis</h2>
